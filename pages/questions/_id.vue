@@ -13,16 +13,17 @@
         :data="question.answers"
         striped
         hoverable
+        default-sort="creationDate"
         style="cursor: pointer;"
       >
         <template slot-scope="props">
-          <b-table-column field="answer" label="Answer">
+          <b-table-column field="answer" label="Answer" sortable>
             {{ props.row.answer }}
           </b-table-column>
-          <b-table-column field="user" label="Answered by">
+          <b-table-column field="user" label="Answered by" sortable>
             {{ props.row.user }}
           </b-table-column>
-          <b-table-column field="creationDate" label="Answered at">
+          <b-table-column field="creationDate" label="Answered at" sortable>
             {{ props.row.creationDate | datetime }}
           </b-table-column>
         </template>
