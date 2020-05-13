@@ -9,19 +9,25 @@
       v-on:click="viewQuestion"
       striped
       hoverable
+      default-sort="creationDate"
       style="cursor: pointer;"
     >
       <template slot-scope="props">
-        <b-table-column field="question" label="Question">
+        <b-table-column field="question" label="Question" sortable>
           {{ props.row.question }}
         </b-table-column>
-        <b-table-column field="user" label="Asked by">
+        <b-table-column field="user" label="Asked by" sortable>
           {{ props.row.user }}
         </b-table-column>
-        <b-table-column field="creationDate" label="Asked at">
+        <b-table-column field="creationDate" label="Asked at" sortable>
           {{ props.row.creationDate | datetime }}
         </b-table-column>
-        <b-table-column field="numberOfAnswers" label="Answers">
+        <b-table-column
+          field="numberOfAnswers"
+          label="Answers"
+          sortable
+          numeric
+        >
           {{ props.row.numberOfAnswers }}
         </b-table-column>
       </template>
