@@ -30,6 +30,9 @@
         >
           {{ props.row.numberOfAnswers }}
         </b-table-column>
+        <b-table-column field="likes" label="Likes" sortable numeric>
+          <b-icon icon="thumb-up-outline" /> {{ props.row.likes }}
+        </b-table-column>
       </template>
 
       <template slot="empty">

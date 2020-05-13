@@ -8,6 +8,15 @@
         Asked by {{ question.user }} at {{ question.creationDate | datetime }}
       </span>
     </p>
+    <p>
+      <span
+        @click="like"
+        class="subtitle is-6 has-text-grey"
+        style="cursor: pointer;"
+      >
+        <b-icon icon="thumb-up-outline" /> {{ question.likes }}
+      </span>
+    </p>
     <section class="section">
       <b-table
         :data="question.answers"
@@ -94,6 +103,13 @@ export default {
       )
 
       this.newAnswer = ''
+      location.reload()
+    },
+
+    async like() {
+      await this.$axios.post(
+        `http://localhost:8080/questions/${this.question._id}/like`
+      )
       location.reload()
     }
   },
