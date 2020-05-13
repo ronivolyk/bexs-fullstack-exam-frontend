@@ -52,6 +52,11 @@ import * as moment from 'moment'
 export default {
   middleware: 'checkAuthentication',
 
+  filters: {
+    datetime: (dateString) =>
+      moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
+  },
+
   async asyncData({ $axios }) {
     const questions = (await $axios.get('http://localhost:8080/questions')).data
     return { questions }
@@ -64,11 +69,6 @@ export default {
         params: { id: question._id }
       })
     }
-  },
-
-  filters: {
-    datetime: (dateString) =>
-      moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
   }
 }
 </script>

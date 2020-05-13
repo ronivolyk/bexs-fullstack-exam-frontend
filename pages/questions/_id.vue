@@ -80,9 +80,20 @@
 import * as moment from 'moment'
 
 export default {
+  filters: {
+    datetime: (dateString) =>
+      moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
+  },
+
   data() {
     return {
       newAnswer: ''
+    }
+  },
+
+  computed: {
+    user() {
+      return this.$store.getters.user
     }
   },
 
@@ -125,17 +136,6 @@ export default {
       )
       location.reload()
     }
-  },
-
-  computed: {
-    user() {
-      return this.$store.getters.user
-    }
-  },
-
-  filters: {
-    datetime: (dateString) =>
-      moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
   }
 }
 </script>
