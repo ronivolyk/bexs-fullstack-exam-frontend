@@ -15,18 +15,21 @@
         <b-table-column field="question" label="Question">
           {{ props.row.question }}
         </b-table-column>
-        <b-table-column field="user" label="User">
+        <b-table-column field="user" label="Asked by">
           {{ props.row.user }}
         </b-table-column>
-        <b-table-column field="creationDate" label="Creation Date">
+        <b-table-column field="creationDate" label="Asked at">
           {{ props.row.creationDate | datetime }}
+        </b-table-column>
+        <b-table-column field="numberOfAnswers" label="Answers">
+          {{ props.row.numberOfAnswers }}
         </b-table-column>
       </template>
 
       <template slot="empty">
         <section class="section">
           <div class="content has-text-centered">
-            <p>No questions found</p>
+            <p class="subtitle has-text-grey">No questions found</p>
           </div>
         </section>
       </template>
@@ -43,6 +46,15 @@ export default {
   async asyncData({ $axios }) {
     const questions = (await $axios.get('http://localhost:8080/questions')).data
     return { questions }
+  },
+
+  methods: {
+    viewQuestion(question) {
+      this.$router.push({
+        name: `questions-id`,
+        params: { id: question._id }
+      })
+    }
   },
 
   filters: {
