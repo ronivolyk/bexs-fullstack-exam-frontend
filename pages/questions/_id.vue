@@ -10,7 +10,7 @@
     </p>
     <p>
       <span
-        @click="like"
+        @click="likeQuestion"
         class="subtitle is-6 has-text-grey"
         style="cursor: pointer;"
       >
@@ -34,6 +34,12 @@
           </b-table-column>
           <b-table-column field="creationDate" label="Answered at" sortable>
             {{ props.row.creationDate | datetime }}
+          </b-table-column>
+          <b-table-column field="likes" label="Likes" sortable numeric>
+            <span @click="likeAnswer(props.row)">
+              <b-icon icon="thumb-up-outline" />
+              {{ props.row.likes }}
+            </span>
           </b-table-column>
         </template>
 
@@ -106,9 +112,16 @@ export default {
       location.reload()
     },
 
-    async like() {
+    async likeQuestion() {
       await this.$axios.post(
         `http://localhost:8080/questions/${this.question._id}/like`
+      )
+      location.reload()
+    },
+
+    async likeAnswer(answer) {
+      await this.$axios.post(
+        `http://localhost:8080/questions/${this.question._id}/answers/${answer.position}/like`
       )
       location.reload()
     }
