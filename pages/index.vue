@@ -8,9 +8,12 @@
           style="width: 500px;"
         />
 
-        <p class="control">
-          <b-button @click="search" class="is-success">Search</b-button>
-        </p>
+        <b-button @click="search" class="is-success">Search</b-button>
+      </b-field>
+      <b-field horizontal>
+        <b-checkbox v-on:input="search" v-model="hideAnswered">
+          Show only unanswered questions
+        </b-checkbox>
       </b-field>
     </div>
 
@@ -73,7 +76,8 @@ export default {
 
   data() {
     return {
-      searchFor: ''
+      searchFor: '',
+      hideAnswered: false
     }
   },
 
@@ -94,7 +98,7 @@ export default {
     async search() {
       this.questions = (
         await this.$axios.get(
-          `http://localhost:8080/questions?search=${this.searchFor}`
+          `http://localhost:8080/questions?search=${this.searchFor}&hideAnswered=${this.hideAnswered}`
         )
       ).data
     }
