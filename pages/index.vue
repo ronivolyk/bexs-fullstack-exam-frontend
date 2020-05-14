@@ -4,6 +4,7 @@
       <b-field horizontal>
         <b-input
           v-model="searchFor"
+          v-on:keyup.native.enter="search"
           placeholder="Search..."
           style="width: 500px;"
         />

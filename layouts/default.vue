@@ -15,6 +15,7 @@
                 <b-field horizontal>
                   <b-input
                     v-model="newQuestion"
+                    v-on:keyup.native.enter="ask"
                     placeholder="Type your question here..."
                     style="width: 500px;"
                   />
@@ -83,6 +84,9 @@ export default {
     logout() {
       this.$store.dispatch('logout')
       this.$router.push('/login')
+    },
+    a() {
+      alert(1)
     }
   }
 }

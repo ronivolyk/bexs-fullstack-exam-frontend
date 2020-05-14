@@ -61,6 +61,7 @@
         <b-field horizontal>
           <b-input
             v-model="newAnswer"
+            v-on:keyup.native.enter="answer"
             placeholder="Type your answer here..."
             style="width: 500px;"
           />
