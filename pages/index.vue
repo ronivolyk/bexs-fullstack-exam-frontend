@@ -75,17 +75,30 @@ export default {
       moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
   },
 
-  data() {
-    return {
-      searchFor: '',
-      hideAnswered: false
+  computed: {
+    searchFor: {
+      get() {
+        return this.$store.getters.searchFor
+      },
+      set(value) {
+        this.$store.commit('searchFor', value)
+      }
+    },
+    hideAnswered: {
+      get() {
+        return this.$store.getters.hideAnswered
+      },
+      set(value) {
+        this.$store.commit('hideAnswered', value)
+      }
+    },
+    questions() {
+      return this.$store.getters.questions
     }
   },
 
-  async asyncData({ $axios }) {
-    const questions = (await $axios.get('http://localhost:8080/questions')).data
-
-    return { questions }
+  async asyncData(context) {
+    await context.store.dispatch('loadQuestions')
   },
 
   methods: {
@@ -97,11 +110,7 @@ export default {
     },
 
     async search() {
-      this.questions = (
-        await this.$axios.get(
-          `http://localhost:8080/questions?search=${this.searchFor}&hideAnswered=${this.hideAnswered}`
-        )
-      ).data
+      await this.$store.dispatch('loadQuestions')
     }
   }
 }

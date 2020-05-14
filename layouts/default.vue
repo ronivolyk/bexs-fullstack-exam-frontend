@@ -71,22 +71,13 @@ export default {
 
   methods: {
     async ask() {
-      const question = {
-        question: this.newQuestion,
-        user: this.user
-      }
-
-      await this.$axios.post('http://localhost:8080/questions', question)
-
+      await this.$store.dispatch('askQuestion', this.newQuestion)
       this.newQuestion = ''
-      location.reload()
     },
+
     logout() {
       this.$store.dispatch('logout')
       this.$router.push('/login')
-    },
-    a() {
-      alert(1)
     }
   }
 }

@@ -95,47 +95,29 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user
+    },
+    question() {
+      return this.$store.getters.question
     }
   },
 
   async asyncData(context) {
     const questionId = context.route.params.id
-
-    const question = (
-      await context.$axios.get(`http://localhost:8080/questions/${questionId}`)
-    ).data
-
-    return { question }
+    await context.store.dispatch('loadQuestion', questionId)
   },
 
   methods: {
     async answer() {
-      const answer = {
-        answer: this.newAnswer,
-        user: this.user
-      }
-
-      await this.$axios.post(
-        `http://localhost:8080/questions/${this.question._id}/answers`,
-        answer
-      )
-
+      await this.$store.dispatch('postAnswer', this.newAnswer)
       this.newAnswer = ''
-      location.reload()
     },
 
     async likeQuestion() {
-      await this.$axios.post(
-        `http://localhost:8080/questions/${this.question._id}/like`
-      )
-      location.reload()
+      await this.$store.dispatch('likeQuestion')
     },
 
     async likeAnswer(answer) {
-      await this.$axios.post(
-        `http://localhost:8080/questions/${this.question._id}/answers/${answer.position}/like`
-      )
-      location.reload()
+      await this.$store.dispatch('likeAnswer', answer.position)
     }
   }
 }
