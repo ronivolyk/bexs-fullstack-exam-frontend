@@ -10,6 +10,7 @@
         />
 
         <b-button @click="search" class="is-success">Search</b-button>
+        <b-button @click="cleanSearch" class="is-success">Clean</b-button>
       </b-field>
       <b-field horizontal>
         <b-checkbox v-on:input="search" v-model="hideAnswered">
@@ -110,6 +111,11 @@ export default {
     },
 
     async search() {
+      await this.$store.dispatch('loadQuestions')
+    },
+
+    async cleanSearch() {
+      this.searchFor = ''
       await this.$store.dispatch('loadQuestions')
     }
   }
