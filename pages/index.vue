@@ -1,5 +1,19 @@
 <template>
   <section class="section">
+    <div class="buttons">
+      <b-field horizontal>
+        <b-input
+          v-model="searchFor"
+          placeholder="Search..."
+          style="width: 500px;"
+        />
+
+        <p class="control">
+          <b-button @click="search" class="is-success">Search</b-button>
+        </p>
+      </b-field>
+    </div>
+
     <h3 class="subtitle has-text-grey">
       Select a question below to view the answers:
     </h3>
@@ -57,8 +71,15 @@ export default {
       moment(new Date(dateString)).format('DD/MM/YYYY HH:mm:ss')
   },
 
+  data() {
+    return {
+      searchFor: ''
+    }
+  },
+
   async asyncData({ $axios }) {
     const questions = (await $axios.get('http://localhost:8080/questions')).data
+
     return { questions }
   },
 
@@ -68,6 +89,14 @@ export default {
         name: `questions-id`,
         params: { id: question._id }
       })
+    },
+
+    async search() {
+      this.questions = (
+        await this.$axios.get(
+          `http://localhost:8080/questions?search=${this.searchFor}`
+        )
+      ).data
     }
   }
 }
