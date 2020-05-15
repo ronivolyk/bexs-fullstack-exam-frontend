@@ -31,7 +31,7 @@ export default {
         this.$router.push('/')
       } else {
         const message = resultLogin.error
-        this.$buefy.toast.open({ message, type: 'is-success' })
+        this.$buefy.toast.open({ message, type: 'is-danger' })
       }
     }
   }
